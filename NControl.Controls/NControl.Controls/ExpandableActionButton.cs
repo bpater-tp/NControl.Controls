@@ -38,7 +38,7 @@ namespace NControl.Controls
 		/// <summary>
 		/// The main button.
 		/// </summary>
-		private readonly ToggleActionButton _mainButton;
+		private ToggleActionButton _mainButton;
 
 		/// <summary>
 		/// The layout.
@@ -156,7 +156,7 @@ namespace NControl.Controls
 			foreach (var button in Buttons) {
 				//button.HasShadow = false;
 				tasks.Add(button.TranslateTo (0.0, 0.0, easing: Easing.CubicInOut));
-                tasks.Add(button.FadeTo(0.0, 350, Easing.CubicInOut));
+				tasks.Add(button.FadeTo(0.0, 350, Easing.CubicInOut));
 			}
 
 			await Task.WhenAll(tasks);
@@ -259,6 +259,31 @@ namespace NControl.Controls
 			get {  return _buttons; }
 		}
 			
+        /// <summary>
+        /// The button icon property.
+        /// </summary>
+        public static BindableProperty ButtonIconProperty =
+            BindableProperty.Create(nameof(ButtonIcon), typeof(string), typeof(ExpandableActionButton), FontAwesomeLabel.FAPlus,
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ExpandableActionButton)bindable;
+                    ctrl._mainButton.ButtonIcon = (string)newValue;
+                });
+
+        /// <summary>
+        /// Gets or sets the button icon.
+        /// </summary>
+        /// <value>The button icon.</value>
+        public string ButtonIcon
+        {
+            get { return (string)GetValue(ButtonIconProperty); }
+            set
+            {
+                SetValue(ButtonIconProperty, value);
+                _mainButton.ButtonIcon = value;
+            }
+        }
+
 		#endregion
 	}
 }
