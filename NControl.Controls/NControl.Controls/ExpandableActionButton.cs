@@ -153,16 +153,10 @@ namespace NControl.Controls
 		    _isShowingSubmenu = false;
 
 			var tasks = new List<Task>();
-			foreach (var button in Buttons) {						
-				button.HasShadow = false;
+			foreach (var button in Buttons) {
+				//button.HasShadow = false;
 				tasks.Add(button.TranslateTo (0.0, 0.0, easing: Easing.CubicInOut));
-			}
-
-			await Task.WhenAll(tasks);
-
-			tasks.Clear ();
-			foreach (var button in Buttons) {						
-				tasks.Add (button.FadeTo (0.0, 350, Easing.CubicInOut));
+                tasks.Add(button.FadeTo(0.0, 350, Easing.CubicInOut));
 			}
 
 			await Task.WhenAll(tasks);
@@ -190,7 +184,7 @@ namespace NControl.Controls
 				    button.Command.CanExecute (button.CommandParameter) == false)) 
 					continue;
 				
-				button.HasShadow = true;
+				//button.HasShadow = true;
 				tasks.Add (button.FadeTo (1.0, 50));
 				tasks.Add(button.TranslateTo (0.0, -(ButtonPadding+_mainButton.Height) * c++, easing: Easing.SpringIn));
 			}			
