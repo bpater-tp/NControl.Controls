@@ -43,6 +43,7 @@ namespace NControl.Controls.Demo.FormsApp
 
 			var abex = new ExpandableActionButton {
 				ButtonColor = Color.FromHex("#FF9800"),
+				ButtonIcon = FontAwesomeLabel.FAPlusSquare,
 				Buttons = {
 					playButton,
 					new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag},
