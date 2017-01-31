@@ -30,7 +30,6 @@ using NControl.Abstractions;
 using NGraphics;
 using Xamarin.Forms;
 using System.Windows.Input;
-using System.Collections.Generic;
 using Color = Xamarin.Forms.Color;
 using TextAlignment = Xamarin.Forms.TextAlignment;
 
@@ -63,6 +62,11 @@ namespace NControl.Controls
 		/// The button icon label.
 		/// </summary>
 		protected readonly FontAwesomeLabel ButtonIconLabel;
+
+        /// <summary>
+        /// The button side text.
+        /// </summary>
+        protected FontAwesomeLabel ButtonTextLabel;
 
 		#endregion
 
@@ -118,9 +122,22 @@ namespace NControl.Controls
 				FontSize = 14,
 			};
 
-			layout.Children.Add (ButtonShadowElement);
+            ButtonTextLabel = new FontAwesomeLabel
+            {
+                HorizontalTextAlignment = TextAlignment.End,
+                VerticalTextAlignment = TextAlignment.Center,
+                TextColor = Color.Black,
+                Text = "",
+                FontSize = 10,
+            };
+            var but = new Rect();
+            but.Inflate(new NGraphics.Size(26));
+            ButtonTextLabel.TranslationX = -but.Width;
+
+            layout.Children.Add (ButtonShadowElement);
 			layout.Children.Add (ButtonElement);
 			layout.Children.Add (ButtonIconLabel);
+            layout.Children.Add (ButtonTextLabel);
 
 			Content = layout;
 		}
@@ -234,6 +251,52 @@ namespace NControl.Controls
 					var ctrl = (ActionButton)bindable;
 					ctrl.ButtonIcon = (string)newValue;
 				});
+
+        /// <summary>
+        /// The button text property.
+        /// </summary>
+        public static BindableProperty ButtonTextProperty =
+            BindableProperty.Create(nameof(ButtonText), typeof(string), typeof(ActionButton), "",
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ActionButton)bindable;
+                    ctrl.ButtonText = (string)newValue;
+                });
+
+        public string ButtonText
+        {
+            get { return (string)GetValue(ButtonTextProperty); }
+            set
+            {
+                SetValue(ButtonTextProperty, value);
+                ButtonTextLabel.Text = value;
+            }
+        }
+
+        /// <summary>
+        /// The button text color property.
+        /// </summary>
+        public static BindableProperty ButtonTextColorProperty =
+            BindableProperty.Create(nameof(ButtonTextColor), typeof(Color), typeof(ActionButton), Color.Black,
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ActionButton)bindable;
+                    ctrl.ButtonTextColor = (Color)newValue;
+                });
+
+        /// <summary>
+        /// Gets or sets the color of the button text.
+        /// </summary>
+        /// <value>The color of the buton.</value>
+        public Color ButtonTextColor
+        {
+            get { return (Color)GetValue(ButtonTextColorProperty); }
+            set
+            {
+                SetValue(ButtonTextColorProperty, value);
+                ButtonTextLabel.TextColor = value;
+            }
+        }
 
 		/// <summary>
 		/// Gets or sets the button icon.
