@@ -103,14 +103,15 @@ namespace NControl.Controls
 			foreach(var button in Buttons)
 			{
 				button.Opacity = 0.0;
-                button.Command = new Command(async () => {
+                button.CommandParameter = this;
+     //           button.Command = new Command(async () => {
 
-                    if (!_isShowingSubmenu)
-				        return;
+     //               if (!_isShowingSubmenu)
+				 //       return;
 
-                    _mainButton.IsToggled = false;
-					await HideButtonsAsync ();
-                });
+     //               _mainButton.IsToggled = false;
+					//await HideButtonsAsync ();
+     //           });
                 
 				AddButtonToLayout (button, _buttonsLayout);
 			}				
@@ -145,12 +146,13 @@ namespace NControl.Controls
 		/// <summary>
 		/// Hides the buttons.
 		/// </summary>
-		private async Task HideButtonsAsync ()
+		public async Task HideButtonsAsync ()
 		{
 		    if (!_isShowingSubmenu)
 		        return;
 
 		    _isShowingSubmenu = false;
+            _mainButton.IsToggled = false;
 
 			var tasks = new List<Task>();
 			foreach (var button in Buttons) {

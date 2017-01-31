@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace NControl.Controls.Demo.FormsApp
@@ -15,14 +16,25 @@ namespace NControl.Controls.Demo.FormsApp
 
 		protected override void OnAppearing ()
 		{
+            Debug.WriteLine("starting");
 			base.OnAppearing ();
 
 			var layout = new RelativeLayout ();
 			Content = layout;
 
+            _command = new Command((ext) =>
+            {
+                if (ext != null)
+                {
+                    ((ExpandableActionButton)ext).HideButtonsAsync();
+                }
+                Debug.WriteLine("sdsdf");
+            });
+
 			var ab = new ActionButton {
 				ButtonColor = Color.FromHex("#E91E63"),
 				ButtonIcon = FontAwesomeLabel.FAThumbsUp,
+                Command = _command,
 			};
 			layout.Children.Add(ab, () => new Rectangle((layout.Width/4)-(56/2), (layout.Height/2)-(56/2), 56, 56));
 
@@ -30,15 +42,15 @@ namespace NControl.Controls.Demo.FormsApp
 				ButtonColor = Color.FromHex("#FF5722"),
 				ButtonIcon = FontAwesomeLabel.FAPlus,
 			};
-			abtgl.SetBinding (IsToggledProperty, "IsToggled");
+			//abtgl.SetBinding (IsToggledProperty, "IsToggled");
 			layout.Children.Add(abtgl, () => new Rectangle((layout.Width/2)-(56/2), (layout.Height/2)-(56/2), 56, 56));
-
-			_command = new Command ((obj) => {}, (obj) => abtgl.IsToggled);
 
 			var playButton = new ActionButton{ 
 				ButtonColor = Color.FromHex ("#2196F3"), 
-				ButtonIcon = FontAwesomeLabel.FAPlay,
-				Command = _command,
+                ButtonIcon = FontAwesomeLabel.FAUpload,
+                ButtonText = "lalala",
+                ButtonTextColor = Color.Black,
+                Command = _command,
 			};
 
 			var abex = new ExpandableActionButton {
@@ -46,8 +58,8 @@ namespace NControl.Controls.Demo.FormsApp
 				ButtonIcon = FontAwesomeLabel.FAPlusSquare,
 				Buttons = {
 					playButton,
-					new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag},
-					new ActionButton{ ButtonColor = Color.FromHex("#CDDC39"), ButtonIcon = FontAwesomeLabel.FARoad},
+					new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag, Command = _command},
+					new ActionButton{ ButtonColor = Color.FromHex("#CDDC39"), ButtonIcon = FontAwesomeLabel.FARoad, Command = _command},
 				}
 			};
 			layout.Children.Add(abex, () => new Rectangle(((layout.Width/4)*3)-(56/2), (layout.Height/2)-(200), 56, 250));
