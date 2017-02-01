@@ -66,7 +66,11 @@ namespace NControl.Controls
         /// <summary>
         /// The button side text.
         /// </summary>
-        protected FontAwesomeLabel ButtonTextLabel;
+        protected Label SideLabel;
+
+        protected RoundCornerView SideLabelBackground;
+
+	    protected Grid SideLabelGrid;
 
 		#endregion
 
@@ -74,7 +78,7 @@ namespace NControl.Controls
 		/// Initializes a new instance of the <see cref="NControl.Controls.ActionButton"/> class.
 		/// </summary>
 		public ActionButton()
-		{            
+		{
 			var layout = new Grid{Padding = 0, ColumnSpacing = 0, RowSpacing = 0};
 
 			ButtonShadowElement = new NControlView{ 
@@ -83,25 +87,35 @@ namespace NControl.Controls
 					// Draw shadow
 					rect.Inflate(new NGraphics.Size(-4));
 					rect.Y += 4;
+                    double pos_x = 0;
 
 					Device.OnPlatform(
 
-						//iOS
-						() => canvas.DrawEllipse (rect, null, new NGraphics.RadialGradientBrush (
-							new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)),
-						
-						// Android
-						() => canvas.DrawEllipse (rect, null, new NGraphics.RadialGradientBrush (
-							new NGraphics.Point(rect.Width/2, (rect.Height/2)+2),
-							new NGraphics.Size(rect.Width, rect.Height),
-							new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)),
-						
-						// WP
-						() => canvas.DrawEllipse (rect, null, new NGraphics.RadialGradientBrush (
-							new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)),
+                        //iOS
+                        () =>
+                        {
+                            canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
+                            new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
+                            pos_x = -rect.Width;
+                        },
+
+                        // Android
+                        () =>
+                        {
+                            canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
+                            new NGraphics.Point(rect.Width / 2, (rect.Height / 2) + 2),
+                            new NGraphics.Size(rect.Width, rect.Height),
+                            new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
+                            pos_x = -rect.Width / 2;
+                        },
+
+                        // WP
+                        () => canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
+                            new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)),
 						
 						null
 					);
+                    SideLabelGrid.TranslationX = pos_x-(rect.Width/16);
 				},
 			};
 
@@ -122,7 +136,7 @@ namespace NControl.Controls
 				FontSize = 14,
 			};
 
-            ButtonTextLabel = new FontAwesomeLabel
+            SideLabel = new Label
             {
                 HorizontalTextAlignment = TextAlignment.End,
                 VerticalTextAlignment = TextAlignment.Center,
@@ -130,14 +144,36 @@ namespace NControl.Controls
                 Text = "",
                 FontSize = 10,
             };
-            var but = new Rect();
-            but.Inflate(new NGraphics.Size(26));
-            ButtonTextLabel.TranslationX = -but.Width;
 
-            layout.Children.Add (ButtonShadowElement);
-			layout.Children.Add (ButtonElement);
-			layout.Children.Add (ButtonIconLabel);
-            layout.Children.Add (ButtonTextLabel);
+            SideLabelBackground = new RoundCornerView
+            {
+                BackgroundColor = Color.White,
+                CornerRadius = 2,
+                BorderColor = Color.White,
+                BorderWidth = 5,
+
+            };
+
+            SideLabelGrid = new Grid
+            {
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.EndAndExpand,
+                RowDefinitions = {
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
+                },
+                ColumnDefinitions = {
+                    new ColumnDefinition { Width = GridLength.Auto },
+                },
+            };
+            SideLabelGrid.Children.Add(SideLabelBackground, 0, 1);
+            SideLabelGrid.Children.Add(SideLabel, 0, 1);
+
+            layout.Children.Add(ButtonShadowElement);
+			layout.Children.Add(ButtonElement);
+			layout.Children.Add(ButtonIconLabel);
+            layout.Children.Add(SideLabelGrid);
 
 			Content = layout;
 		}
@@ -255,50 +291,101 @@ namespace NControl.Controls
         /// <summary>
         /// The button text property.
         /// </summary>
-        public static BindableProperty ButtonTextProperty =
-            BindableProperty.Create(nameof(ButtonText), typeof(string), typeof(ActionButton), "",
+        public static BindableProperty SideLabelTextProperty =
+            BindableProperty.Create(nameof(SideLabelText), typeof(string), typeof(ActionButton), "",
                 BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
                 {
                     var ctrl = (ActionButton)bindable;
-                    ctrl.ButtonText = (string)newValue;
+                    ctrl.SideLabelText = (string)newValue;
                 });
 
-        public string ButtonText
+        public string SideLabelText
         {
-            get { return (string)GetValue(ButtonTextProperty); }
+            get { return (string)GetValue(SideLabelTextProperty); }
             set
             {
-                SetValue(ButtonTextProperty, value);
-                ButtonTextLabel.Text = value;
+                SetValue(SideLabelTextProperty, value);
+                SideLabel.Text = value;
             }
         }
 
         /// <summary>
-        /// The button text color property.
+        /// The side label text color property.
         /// </summary>
-        public static BindableProperty ButtonTextColorProperty =
-            BindableProperty.Create(nameof(ButtonTextColor), typeof(Color), typeof(ActionButton), Color.Black,
+        public static BindableProperty SideLabelTextColorProperty =
+            BindableProperty.Create(nameof(SideLabelTextColor), typeof(Color), typeof(ActionButton), Color.Black,
                 BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
                 {
                     var ctrl = (ActionButton)bindable;
-                    ctrl.ButtonTextColor = (Color)newValue;
+                    ctrl.SideLabelTextColor = (Color)newValue;
                 });
 
         /// <summary>
-        /// Gets or sets the color of the button text.
+        /// Gets or sets the color of the side label text.
         /// </summary>
         /// <value>The color of the buton.</value>
-        public Color ButtonTextColor
+        public Color SideLabelTextColor
         {
-            get { return (Color)GetValue(ButtonTextColorProperty); }
+            get { return (Color)GetValue(SideLabelTextColorProperty); }
             set
             {
-                SetValue(ButtonTextColorProperty, value);
-                ButtonTextLabel.TextColor = value;
+                SetValue(SideLabelTextColorProperty, value);
+                SideLabel.TextColor = value;
             }
         }
 
-		/// <summary>
+	    /// <summary>
+	    /// The side label background color property.
+	    /// </summary>
+	    public static BindableProperty SideLabelBackgroundColorProperty =
+	        BindableProperty.Create(nameof(SideLabelBackgroundColor), typeof(Color), typeof(ActionButton), Color.White,
+	            BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+	            {
+	                var ctrl = (ActionButton)bindable;
+	                ctrl.SideLabelBackgroundColor = (Color)newValue;
+	            });
+
+	    /// <summary>
+	    /// Gets or sets the background color of the side label.
+	    /// </summary>
+	    /// <value>The color of the buton.</value>
+	    public Color SideLabelBackgroundColor
+	    {
+	        get { return (Color)GetValue(SideLabelBackgroundColorProperty); }
+	        set
+	        {
+	            SetValue(SideLabelBackgroundColorProperty, value);
+	            SideLabelBackground.BackgroundColor = value;
+	            SideLabelBackground.BorderColor = value;
+	        }
+	    }
+
+	    /// <summary>
+	    /// The side label text font size property.
+	    /// </summary>
+	    public static BindableProperty SideLabelFontSizeProperty =
+	        BindableProperty.Create(nameof(SideLabelFontSize), typeof(double), typeof(ActionButton), 10.0,
+	            BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+	            {
+	                var ctrl = (ActionButton)bindable;
+	                ctrl.SideLabelFontSize = (double)newValue;
+	            });
+
+	    /// <summary>
+	    /// Gets or sets the font size of the side label text.
+	    /// </summary>
+	    /// <value>The font size of the buton.</value>
+	    public double SideLabelFontSize
+	    {
+	        get { return (double)GetValue(SideLabelFontSizeProperty); }
+	        set
+	        {
+	            SetValue(SideLabelFontSizeProperty, value);
+	            SideLabel.FontSize = value;
+	        }
+	    }
+
+	    /// <summary>
 		/// Gets or sets the button icon.
 		/// </summary>
 		/// <value>The button icon.</value>
@@ -310,6 +397,31 @@ namespace NControl.Controls
 				ButtonIconLabel.Text = value;
 			}
 		}
+
+        /// <summary>
+        /// The button icon size property.
+        /// </summary>
+        public static BindableProperty ButtonIconSizeProperty =
+            BindableProperty.Create(nameof(ButtonIconSize), typeof(Color), typeof(ActionButton), Color.Black,
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ActionButton)bindable;
+                    ctrl.ButtonIconSize = (double)newValue;
+                });
+
+        /// <summary>
+        /// Gets or sets the icon size.
+        /// </summary>
+        /// <value>The font size of the buton.</value>
+        public double ButtonIconSize
+        {
+            get { return (double)GetValue(ButtonIconSizeProperty); }
+            set
+            {
+                SetValue(ButtonIconSizeProperty, value);
+                ButtonIconLabel.FontSize = value;
+            }
+        }
 
 		/// <summary>
 		/// The button icon property.
@@ -328,13 +440,10 @@ namespace NControl.Controls
 		public bool HasShadow
 		{
 			get {  return (bool)GetValue (HasShadowProperty);}
-			set {
-				SetValue (HasShadowProperty, value);
-
-				if(value)
-					ButtonShadowElement.FadeTo (1.0, 250);
-				else
-					ButtonShadowElement.FadeTo (0.0, 250);
+			set
+			{
+			    SetValue (HasShadowProperty, value);
+			    ButtonShadowElement.FadeTo(value ? 1.0 : 0.0, 250);
 			}
 		}
 

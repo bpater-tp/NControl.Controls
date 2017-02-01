@@ -11,7 +11,7 @@ namespace NControl.Controls.Demo.FormsApp
 		public ActionButtonPage ()
 		{
 			Title = "ActionButton";
-			BackgroundColor = Color.White;
+            BackgroundColor = Color.Gray;
 		}
 
 		protected override void OnAppearing ()
@@ -48,8 +48,11 @@ namespace NControl.Controls.Demo.FormsApp
 			var playButton = new ActionButton{ 
 				ButtonColor = Color.FromHex ("#2196F3"), 
                 ButtonIcon = FontAwesomeLabel.FAUpload,
-                ButtonText = "lalala",
-                ButtonTextColor = Color.Black,
+                ButtonIconSize = 20,
+                SideLabelText = "from gallery",
+                SideLabelTextColor = Color.White,
+			    SideLabelBackgroundColor = Color.Blue,
+                SideLabelFontSize = 12,
                 Command = _command,
 			};
 
@@ -58,7 +61,7 @@ namespace NControl.Controls.Demo.FormsApp
 				ButtonIcon = FontAwesomeLabel.FAPlusSquare,
 				Buttons = {
 					playButton,
-					new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag, Command = _command},
+                    new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag, Command = _command, SideLabelText = "from camera",},
 					new ActionButton{ ButtonColor = Color.FromHex("#CDDC39"), ButtonIcon = FontAwesomeLabel.FARoad, Command = _command},
 				}
 			};
