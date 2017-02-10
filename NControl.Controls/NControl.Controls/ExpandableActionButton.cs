@@ -286,7 +286,32 @@ namespace NControl.Controls
             }
         }
 
-		#endregion
+        /// <summary>
+        /// The button icon size property.
+        /// </summary>
+        public static BindableProperty ButtonIconSizeProperty =
+            BindableProperty.Create(nameof(ButtonIconSize), typeof(Color), typeof(ActionButton), Color.Black,
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ActionButton)bindable;
+                    ctrl.ButtonIconSize = (double)newValue;
+                });
+
+        /// <summary>
+        /// Gets or sets the icon size.
+        /// </summary>
+        /// <value>The font size of the buton.</value>
+        public double ButtonIconSize
+        {
+            get { return (double)GetValue(ButtonIconSizeProperty); }
+            set
+            {
+                SetValue(ButtonIconSizeProperty, value);
+                _mainButton.ButtonIconSize = value;
+            }
+        }
+
+#endregion
 	}
 }
 
