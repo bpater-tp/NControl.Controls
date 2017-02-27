@@ -23,8 +23,9 @@ namespace NControl.Controls
 	/// </summary>
 	public class ExpandableActionButton: ContentView
 	{
-		#region Private Members
+        #region Private Members
 
+        protected float AndroidScale = 1.0f;
 		/// <summary>
 		/// The buttons added.
 		/// </summary>
@@ -104,6 +105,7 @@ namespace NControl.Controls
 			{
 				button.Opacity = 0.0;
                 button.CommandParameter = this;
+                button.DensityScale = AndroidScale;
      //           button.Command = new Command(async () => {
 
      //               if (!_isShowingSubmenu)
@@ -290,10 +292,10 @@ namespace NControl.Controls
         /// The button icon size property.
         /// </summary>
         public static BindableProperty ButtonIconSizeProperty =
-            BindableProperty.Create(nameof(ButtonIconSize), typeof(Color), typeof(ActionButton), Color.Black,
+            BindableProperty.Create(nameof(ButtonIconSize), typeof(Color), typeof(ExpandableActionButton), Color.Black,
                 BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
                 {
-                    var ctrl = (ActionButton)bindable;
+                    var ctrl = (ExpandableActionButton)bindable;
                     ctrl.ButtonIconSize = (double)newValue;
                 });
 
@@ -311,6 +313,29 @@ namespace NControl.Controls
             }
         }
 
+        /// <summary>
+        /// The density scale property.
+        /// </summary>
+        public static BindableProperty DensityScaleProperty =
+            BindableProperty.Create(nameof(DensityScale), typeof(float), typeof(ExpandableActionButton), 1.0f,
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ExpandableActionButton)bindable;
+                    ctrl.DensityScale = (float)newValue;
+                });
+
+        /// <summary>
+        /// Gets or sets the density scale.
+        /// </summary>
+        public float DensityScale
+        {
+            get { return (float)GetValue(DensityScaleProperty); }
+            set
+            {
+                SetValue(DensityScaleProperty, value);
+                AndroidScale = value;
+            }
+        }
 #endregion
 	}
 }

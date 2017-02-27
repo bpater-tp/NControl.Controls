@@ -72,6 +72,9 @@ namespace NControl.Controls
 
 	    protected Grid SideLabelGrid;
 
+        // used on android as ncontrols seems to operate on hardware pixels
+        protected float AndroidScale = 1.0f;
+
 		#endregion
 
 		/// <summary>
@@ -106,15 +109,13 @@ namespace NControl.Controls
                             new NGraphics.Point(rect.Width / 2, (rect.Height / 2) + 2),
                             new NGraphics.Size(rect.Width, rect.Height),
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            pos_x = -rect.Width / 2;
+                            pos_x = -rect.Width / AndroidScale -1;
                         },
 
                         // WP
                         () => canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
-                            new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)),
-						
-						null
-					);
+                            new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)), null);
+
                     SideLabelGrid.TranslationX = pos_x-(rect.Width/16);
 				},
 			};
@@ -143,15 +144,15 @@ namespace NControl.Controls
                 TextColor = Color.Black,
                 Text = "",
                 FontSize = 10,
+                Margin = new Thickness {Top=2, Bottom=2, Left=10, Right=10 },
             };
 
             SideLabelBackground = new RoundCornerView
             {
-                BackgroundColor = Color.White,
+                BackgroundColor = Color.Transparent,
                 CornerRadius = 2,
-                BorderColor = Color.White,
-                BorderWidth = 5,
-
+                BorderColor = Color.Transparent,
+                BorderWidth = 2,
             };
 
             SideLabelGrid = new Grid
@@ -469,7 +470,31 @@ namespace NControl.Controls
 				ButtonIconLabel.TextColor = value;
 			}
 		}
-			
+
+        /// <summary>
+        /// The density scale property.
+        /// </summary>
+        public static BindableProperty DensityScaleProperty =
+            BindableProperty.Create(nameof(DensityScale), typeof(float), typeof(ActionButton), 1.0f,
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ActionButton)bindable;
+                    ctrl.DensityScale = (float)newValue;
+                });
+
+        /// <summary>
+        /// Gets or sets the density scale.
+        /// </summary>
+        public float DensityScale
+        {
+            get { return (float)GetValue(DensityScaleProperty); }
+            set
+            {
+                SetValue(DensityScaleProperty, value);
+                AndroidScale = value;
+            }
+        }
+
 		#endregion
 
 		#region Private Members
