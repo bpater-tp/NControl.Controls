@@ -11,56 +11,57 @@ namespace NControl.Controls.Demo.FormsApp
 	{
 		public MyApp ()
 		{
-			var demoPageList = new ContentPage[] {
-				new CustomFontPage(),
-				new MaterialDesignIconsPage(),
-				new FontAwesomeLabelPage(),
-				new RoundCornerViewPage(),
-				new FloatingLabelPage(),
-				new ActionButtonPage(),
-				new CardPageDemo{BindingContext = new ViewModel("CardPage")},
-				new BlurViewPage(),
-				new RippleButtonPage(),
-				new GalleryPage(),
-				new PagingViewPage(),
-				new TabStripPage(),
-				new SvgImagePage(),
-                new CalendarPage(),
-				new WizardPage(),
-				new WizardPageXaml(),
-				new RepeaterPage(),
-            };
+            //var demoPageList = new ContentPage[] {
+            //	new CustomFontPage(),
+            //	new MaterialDesignIconsPage(),
+            //	new FontAwesomeLabelPage(),
+            //	new RoundCornerViewPage(),
+            //	new FloatingLabelPage(),
+            //	new ActionButtonPage(),
+            //	new CardPageDemo{BindingContext = new ViewModel("CardPage")},
+            //	new BlurViewPage(),
+            //	new RippleButtonPage(),
+            //	new GalleryPage(),
+            //	new PagingViewPage(),
+            //	new TabStripPage(),
+            //	new SvgImagePage(),
+            //             new CalendarPage(),
+            //	new WizardPage(),
+            //	new WizardPageXaml(),
+            //	new RepeaterPage(),
+            //         };
 
-			BindingContext = new ViewModel("Should say CardPage");
+            //BindingContext = new ViewModel("Should say CardPage");
 
-			var listView = new ListView {
-				ItemsSource = demoPageList,
-			};
+            //var listView = new ListView {
+            //	ItemsSource = demoPageList,
+            //};
 
-			listView.ItemTemplate = new DataTemplate (typeof(TextCell));
-			listView.ItemTemplate.SetBinding (TextCell.TextProperty, "Title");
+            //listView.ItemTemplate = new DataTemplate (typeof(TextCell));
+            //listView.ItemTemplate.SetBinding (TextCell.TextProperty, "Title");
 
-			var contentLayout = new RelativeLayout ();
-			contentLayout.Children.Add (listView, () => contentLayout.Bounds);
+            //var contentLayout = new RelativeLayout ();
+            //contentLayout.Children.Add (listView, () => contentLayout.Bounds);
 
-			var startPage = new ContentPage {
-				Title = "NControl.Controls",
-				Content = contentLayout              
-			};
+            //var startPage = new ContentPage {
+            //	Title = "NControl.Controls",
+            //	Content = contentLayout              
+            //};
 
-			listView.ItemSelected += async (sender, e) => {
+            //listView.ItemSelected += async (sender, e) => {
 
-				if(listView.SelectedItem == null)
-					return;
-				
-				// Show page
-				await startPage.Navigation.PushAsync(listView.SelectedItem as Page);					
-			};
+            //	if(listView.SelectedItem == null)
+            //		return;
 
-			listView.ItemTapped += (sender, e) => listView.SelectedItem = null;
-				
-			// The root page of your application
-			MainPage = new NavigationPage(startPage);
+            //	// Show page
+            //	await startPage.Navigation.PushAsync(listView.SelectedItem as Page);					
+            //};
+
+            //listView.ItemTapped += (sender, e) => listView.SelectedItem = null;
+
+            //// The root page of your application
+            //MainPage = new NavigationPage(startPage);
+            MainPage = new ActionButtonPage();
 		}
 
 		protected override void OnStart ()
