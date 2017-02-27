@@ -143,14 +143,15 @@ namespace NControl.Controls
                 TextColor = Color.Black,
                 Text = "",
                 FontSize = 10,
+                Margin = new Thickness {Top=2, Bottom=2, Left=10, Right=10 },
             };
 
             SideLabelBackground = new RoundCornerView
             {
                 BackgroundColor = Color.White,
                 CornerRadius = 2,
-                BorderColor = Color.White,
-                BorderWidth = 5,
+                BorderColor = Color.Gray,
+                BorderWidth = 2,
 
             };
 
