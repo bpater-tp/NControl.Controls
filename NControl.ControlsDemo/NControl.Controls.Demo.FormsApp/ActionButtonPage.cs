@@ -51,17 +51,18 @@ namespace NControl.Controls.Demo.FormsApp
                 ButtonIconSize = 20,
                 SideLabelText = "from gallery",
                 SideLabelTextColor = Color.White,
-			    SideLabelBackgroundColor = Color.Blue,
-                SideLabelFontSize = 12,
+                SideLabelBackgroundColor = Color.FromHex("#804444"),
+                SideLabelFontSize = 10,
                 Command = _command,
 			};
 
 			var abex = new ExpandableActionButton {
+                DensityScale = 1.5f,
 				ButtonColor = Color.FromHex("#FF9800"),
 				ButtonIcon = FontAwesomeLabel.FAPlusSquare,
 				Buttons = {
 					playButton,
-                    new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag, Command = _command, SideLabelText = "from camera",},
+                    new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag, Command = _command, SideLabelText = "from camera", SideLabelBackgroundColor = Color.White},
 					new ActionButton{ ButtonColor = Color.FromHex("#CDDC39"), ButtonIcon = FontAwesomeLabel.FARoad, Command = _command},
 				}
 			};
