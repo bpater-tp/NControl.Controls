@@ -80,7 +80,7 @@ namespace NControl.Controls
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NControl.Controls.ActionButton"/> class.
 		/// </summary>
-		public ActionButton()
+		public ActionButton(string sideLabelText="")
 		{
 			var layout = new Grid{Padding = 0, ColumnSpacing = 0, RowSpacing = 0};
 
@@ -99,7 +99,7 @@ namespace NControl.Controls
                         {
                             canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            pos_x = -rect.Width;
+                            pos_x = -SideLabelBackground.Width;
                         },
 
                         // Android
@@ -109,14 +109,15 @@ namespace NControl.Controls
                             new NGraphics.Point(rect.Width / 2, (rect.Height / 2) + 2),
                             new NGraphics.Size(rect.Width, rect.Height),
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            pos_x = -rect.Width / AndroidScale -1;
+                            pos_x = -SideLabelBackground.Width * AndroidScale;
+                            SideLabel.WidthRequest = SideLabel.Width * AndroidScale;
                         },
 
                         // WP
                         () => canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)), null);
 
-                    SideLabelGrid.TranslationX = pos_x-(rect.Width/16);
+                    SideLabelGrid.TranslationX = pos_x;
 				},
 			};
 
@@ -137,14 +138,16 @@ namespace NControl.Controls
 				FontSize = 14,
 			};
 
+
             SideLabel = new Label
             {
-                HorizontalTextAlignment = TextAlignment.End,
+                HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.NoWrap,
                 TextColor = Color.Black,
-                Text = "",
+                Text = sideLabelText,
                 FontSize = 10,
-                Margin = new Thickness {Top=2, Bottom=2, Left=10, Right=10 },
+                Margin = new Thickness {Top=2, Bottom=2, Left=4, Right=4 },
             };
 
             SideLabelBackground = new RoundCornerView
@@ -176,10 +179,10 @@ namespace NControl.Controls
 			layout.Children.Add(ButtonIconLabel);
             layout.Children.Add(SideLabelGrid);
 
-			Content = layout;
+            Content = layout;
 		}
 
-		#region Properties
+        #region Properties
 
 		/// <summary>
 		/// The command property.
@@ -292,23 +295,23 @@ namespace NControl.Controls
         /// <summary>
         /// The button text property.
         /// </summary>
-        public static BindableProperty SideLabelTextProperty =
-            BindableProperty.Create(nameof(SideLabelText), typeof(string), typeof(ActionButton), "",
-                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
-                {
-                    var ctrl = (ActionButton)bindable;
-                    ctrl.SideLabelText = (string)newValue;
-                });
+        //public static BindableProperty SideLabelTextProperty =
+        //    BindableProperty.Create(nameof(SideLabelText), typeof(string), typeof(ActionButton), "",
+        //        BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+        //        {
+        //            var ctrl = (ActionButton)bindable;
+        //            ctrl.SideLabelText = (string)newValue;
+        //        });
 
-        public string SideLabelText
-        {
-            get { return (string)GetValue(SideLabelTextProperty); }
-            set
-            {
-                SetValue(SideLabelTextProperty, value);
-                SideLabel.Text = value;
-            }
-        }
+        //public string SideLabelText
+        //{
+        //    get { return (string)GetValue(SideLabelTextProperty); }
+        //    set
+        //    {
+        //        SetValue(SideLabelTextProperty, value);
+        //        SideLabel.Text = value;
+        //    }
+        //}
 
         /// <summary>
         /// The side label text color property.

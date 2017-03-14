@@ -9,6 +9,8 @@ namespace NControl.Controls.Demo.FormsApp
 {
 	public class MyApp : Application
 	{
+        public static float DensityScale = 1.0f;
+
 		public MyApp ()
 		{
             //var demoPageList = new ContentPage[] {

@@ -45,25 +45,35 @@ namespace NControl.Controls.Demo.FormsApp
 			//abtgl.SetBinding (IsToggledProperty, "IsToggled");
 			layout.Children.Add(abtgl, () => new Rectangle((layout.Width/2)-(56/2), (layout.Height/2)-(56/2), 56, 56));
 
-			var playButton = new ActionButton{ 
+            var playButton = new ActionButton("from gallery"){ 
 				ButtonColor = Color.FromHex ("#2196F3"), 
                 ButtonIcon = FontAwesomeLabel.FAUpload,
                 ButtonIconSize = 20,
-                SideLabelText = "from gallery",
+                //SideLabelText = "from gallery",
                 SideLabelTextColor = Color.White,
                 SideLabelBackgroundColor = Color.FromHex("#804444"),
                 SideLabelFontSize = 10,
                 Command = _command,
 			};
+            var bubButton = new ActionButton("from camera")
+            {
+                ButtonColor = Color.FromHex("#009688"),
+                ButtonIcon = FontAwesomeLabel.FATag,
+                ButtonIconSize = 20,
+                //SideLabelText = "from camera",
+                SideLabelTextColor = Color.White,
+                SideLabelBackgroundColor = Color.FromHex("#804444"),
+                SideLabelFontSize = 10,
+                Command = _command,
+            };
 
 			var abex = new ExpandableActionButton {
-                DensityScale = 1.5f,
+                DensityScale = MyApp.DensityScale,
 				ButtonColor = Color.FromHex("#FF9800"),
 				ButtonIcon = FontAwesomeLabel.FAPlusSquare,
 				Buttons = {
 					playButton,
-                    new ActionButton{ ButtonColor = Color.FromHex("#009688"), ButtonIcon = FontAwesomeLabel.FATag, Command = _command, SideLabelText = "from camera", SideLabelBackgroundColor = Color.White},
-					new ActionButton{ ButtonColor = Color.FromHex("#CDDC39"), ButtonIcon = FontAwesomeLabel.FARoad, Command = _command},
+                    bubButton,
 				}
 			};
 			layout.Children.Add(abex, () => new Rectangle(((layout.Width/4)*3)-(56/2), (layout.Height/2)-(200), 56, 250));

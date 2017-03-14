@@ -20,6 +20,7 @@ namespace NControl.Controls.Demo.FormsApp.Droid
 		{
 			FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
 			FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
+            MyApp.DensityScale = Resources.DisplayMetrics.ScaledDensity;
 
 			base.OnCreate (bundle);
 
