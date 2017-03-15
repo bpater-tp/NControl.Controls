@@ -75,6 +75,9 @@ namespace NControl.Controls
         // used on android as ncontrols seems to operate on hardware pixels
         protected float AndroidScale = 1.0f;
 
+        private static double labelWidth;
+        private static double labelBackWidth;
+
 		#endregion
 
 		/// <summary>
@@ -90,7 +93,10 @@ namespace NControl.Controls
 					// Draw shadow
 					rect.Inflate(new NGraphics.Size(-4));
 					rect.Y += 4;
-                    double pos_x = 0;
+                    double pos_x = -SideLabelBackground.Width;
+                    double scale = 1.4;
+                    labelWidth = labelWidth < 1.0 ? SideLabel.Width * scale : labelWidth;
+                    labelBackWidth = labelBackWidth < 1.0 ? SideLabelBackground.Width * scale : labelBackWidth;
 
 					Device.OnPlatform(
 
@@ -99,7 +105,6 @@ namespace NControl.Controls
                         {
                             canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            pos_x = -SideLabelBackground.Width;
                         },
 
                         // Android
@@ -109,8 +114,9 @@ namespace NControl.Controls
                             new NGraphics.Point(rect.Width / 2, (rect.Height / 2) + 2),
                             new NGraphics.Size(rect.Width, rect.Height),
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            pos_x = -SideLabelBackground.Width * AndroidScale;
-                            SideLabel.WidthRequest = SideLabel.Width * AndroidScale;
+                            SideLabel.WidthRequest = labelWidth;
+                            SideLabelBackground.WidthRequest = labelBackWidth;
+                            pos_x = -SideLabelBackground.Width * scale;
                         },
 
                         // WP
@@ -147,13 +153,13 @@ namespace NControl.Controls
                 TextColor = Color.Black,
                 Text = sideLabelText,
                 FontSize = 10,
-                Margin = new Thickness {Top=2, Bottom=2, Left=4, Right=4 },
+                Margin = new Thickness { Top=2, Bottom=2, Left=4, Right=4 },
             };
 
             SideLabelBackground = new RoundCornerView
             {
                 BackgroundColor = Color.Transparent,
-                CornerRadius = 2,
+                CornerRadius = Device.OnPlatform(3, 6, 3),
                 BorderColor = Color.Transparent,
                 BorderWidth = 2,
             };
