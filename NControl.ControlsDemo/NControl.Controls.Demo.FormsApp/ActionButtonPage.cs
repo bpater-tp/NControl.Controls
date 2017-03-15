@@ -52,7 +52,7 @@ namespace NControl.Controls.Demo.FormsApp
                 //SideLabelText = "from gallery",
                 SideLabelTextColor = Color.White,
                 SideLabelBackgroundColor = Color.FromHex("#804444"),
-                SideLabelFontSize = 10,
+                SideLabelFontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
                 Command = _command,
 			};
             var bubButton = new ActionButton("from camera")
@@ -63,7 +63,7 @@ namespace NControl.Controls.Demo.FormsApp
                 //SideLabelText = "from camera",
                 SideLabelTextColor = Color.White,
                 SideLabelBackgroundColor = Color.FromHex("#804444"),
-                SideLabelFontSize = 10,
+                SideLabelFontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
                 Command = _command,
             };
 
