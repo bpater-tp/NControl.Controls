@@ -75,8 +75,9 @@ namespace NControl.Controls
         // used on android as ncontrols seems to operate on hardware pixels
         protected float AndroidScale = 1.0f;
 
-        private  double labelWidth;
-        private  double labelBackWidth;
+        private double labelWidth;
+
+        private double marginSize = Device.OnPlatform(8, 2, 8);
 
 		#endregion
 
@@ -89,7 +90,6 @@ namespace NControl.Controls
 
 			ButtonShadowElement = new NControlView{ 
 				DrawingFunction = (canvas, rect) => {
-
 					// Draw shadow
 					rect.Inflate(new NGraphics.Size(-4));
 					rect.Y += 4;
@@ -111,14 +111,8 @@ namespace NControl.Controls
                             new NGraphics.Point(rect.Width / 2, (rect.Height / 2) + 2),
                             new NGraphics.Size(rect.Width, rect.Height),
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            double newSize = DependencyService.Get<CalculateTextWidth>().CalculateWidth(sideLabelText);
-                            SideLabel.WidthRequest = newSize;
-                            //double scale = 1.6;
-                            //labelWidth = labelWidth < 1.0 ? SideLabel.Width * scale : labelWidth;
-                            //labelBackWidth = labelBackWidth < 1.0 ? SideLabelBackground.Width * scale : labelBackWidth;
-                            //SideLabel.WidthRequest = labelWidth;
-                            //SideLabelBackground.WidthRequest = labelBackWidth;
-                            pos_x = -SideLabel.Width-(16*2);
+                            SideLabel.WidthRequest = labelWidth;
+                            pos_x = -labelWidth-marginSize-marginSize;
                         },
 
                         // WP
@@ -147,7 +141,6 @@ namespace NControl.Controls
 			};
 
 
-            var marginSize = Device.OnPlatform(8, 2, 8);
             SideLabel = new Label
             {
                 HorizontalTextAlignment = TextAlignment.Center,
@@ -158,6 +151,7 @@ namespace NControl.Controls
                 FontSize = 10,
                 Margin = new Thickness { Top=2, Bottom=2, Left=marginSize, Right=marginSize },
             };
+            labelWidth = DependencyService.Get<CalculateTextWidth>().CalculateWidth(sideLabelText);
 
             SideLabelBackground = new RoundCornerView
             {
