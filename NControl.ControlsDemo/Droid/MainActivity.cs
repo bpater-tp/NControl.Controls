@@ -10,6 +10,7 @@ using Android.OS;
 using NControl.Controls.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using XLabs.Platform.Device;
 
 namespace NControl.Controls.Demo.FormsApp.Droid
 {
@@ -26,7 +27,7 @@ namespace NControl.Controls.Demo.FormsApp.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 			NControls.Init ();
-
+            MyApp.RegisterDeviceResolver(AndroidDevice.CurrentDevice);
 			LoadApplication (new MyApp ());
 		}
 	}

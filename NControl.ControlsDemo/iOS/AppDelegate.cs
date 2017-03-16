@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using NControl.Controls.iOS;
 using UIKit;
+using XLabs.Platform.Device;
 
 namespace NControl.Controls.Demo.FormsApp.iOS
 {
@@ -13,7 +14,7 @@ namespace NControl.Controls.Demo.FormsApp.iOS
 			NControls.Init ();
 
 			LoadApplication (new MyApp ());
-
+            MyApp.RegisterDeviceResolver(AppleDevice.CurrentDevice);
 			return base.FinishedLaunching (app, options);
 		}
 	}

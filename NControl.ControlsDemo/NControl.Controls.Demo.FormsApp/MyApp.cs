@@ -4,6 +4,8 @@ using NGraphics;
 using Xamarin.Forms;
 using System.Reflection;
 using System.Linq;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
 
 namespace NControl.Controls.Demo.FormsApp
 {
@@ -80,6 +82,17 @@ namespace NControl.Controls.Demo.FormsApp
 		{
 			// Handle when your app resumes
 		}
+
+        public static void RegisterDeviceResolver(IDevice device)
+        {
+            if (!Resolver.IsSet)
+            {
+                var resolverContainer = new SimpleContainer();
+                resolverContainer.Register<IDevice>(t => device);
+                Resolver.SetResolver(resolverContainer.GetResolver());
+            }
+        }
+
 	}
 
 	public class ViewModel

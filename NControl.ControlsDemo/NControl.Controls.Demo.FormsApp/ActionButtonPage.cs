@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Xamarin.Forms;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
 
 namespace NControl.Controls.Demo.FormsApp
 {
@@ -45,29 +47,36 @@ namespace NControl.Controls.Demo.FormsApp
 			//abtgl.SetBinding (IsToggledProperty, "IsToggled");
 			layout.Children.Add(abtgl, () => new Rectangle((layout.Width/2)-(56/2), (layout.Height/2)-(56/2), 56, 56));
 
+            var device = Resolver.Resolve<IDevice>();
+            var display = device.Display;
+            double iconFontSize = display.HeightRequestInInches(0.125);
+            double sideFontSize = display.HeightRequestInInches(0.08);
+
+            //var playButton = new ActionButton("z galerii"){
             var playButton = new ActionButton("from gallery"){ 
 				ButtonColor = Color.FromHex ("#2196F3"), 
                 ButtonIcon = FontAwesomeLabel.FAUpload,
-                ButtonIconSize = 20,
+                ButtonIconSize = iconFontSize,
                 //SideLabelText = "from gallery",
                 SideLabelTextColor = Color.White,
                 SideLabelBackgroundColor = Color.FromHex("#804444"),
-                SideLabelFontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                SideLabelFontSize = sideFontSize,
                 Command = _command,
 			};
+            //var bubButton = new ActionButton("z aparatu")
             var bubButton = new ActionButton("from camera")
             {
                 ButtonColor = Color.FromHex("#009688"),
                 ButtonIcon = FontAwesomeLabel.FATag,
-                ButtonIconSize = 20,
+                ButtonIconSize = iconFontSize,
                 //SideLabelText = "from camera",
                 SideLabelTextColor = Color.White,
                 SideLabelBackgroundColor = Color.FromHex("#804444"),
-                SideLabelFontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                SideLabelFontSize = sideFontSize,
                 Command = _command,
             };
 
-			var abex = new ExpandableActionButton {
+            var abex = new ExpandableActionButton {
                 DensityScale = MyApp.DensityScale,
 				ButtonColor = Color.FromHex("#FF9800"),
 				ButtonIcon = FontAwesomeLabel.FAPlusSquare,
