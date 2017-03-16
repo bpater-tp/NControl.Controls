@@ -74,6 +74,7 @@
     <Compile Include="RoundCornerViewRenderer.cs" />
     <Compile Include="CardPageRenderer.cs" />
     <Compile Include="TouchFixedScrollViewRenderer.cs" />
+    <Compile Include="CalculateTextWidth_iOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NControl.Controls\NControl.Controls.csproj">

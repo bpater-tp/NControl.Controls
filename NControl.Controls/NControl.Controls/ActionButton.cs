@@ -75,8 +75,8 @@ namespace NControl.Controls
         // used on android as ncontrols seems to operate on hardware pixels
         protected float AndroidScale = 1.0f;
 
-        private static double labelWidth;
-        private static double labelBackWidth;
+        private  double labelWidth;
+        private  double labelBackWidth;
 
 		#endregion
 
@@ -94,9 +94,6 @@ namespace NControl.Controls
 					rect.Inflate(new NGraphics.Size(-4));
 					rect.Y += 4;
                     double pos_x = -SideLabelBackground.Width;
-                    double scale = 1.4;
-                    labelWidth = labelWidth < 1.0 ? SideLabel.Width * scale : labelWidth;
-                    labelBackWidth = labelBackWidth < 1.0 ? SideLabelBackground.Width * scale : labelBackWidth;
 
 					Device.OnPlatform(
 
@@ -114,9 +111,14 @@ namespace NControl.Controls
                             new NGraphics.Point(rect.Width / 2, (rect.Height / 2) + 2),
                             new NGraphics.Size(rect.Width, rect.Height),
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            SideLabel.WidthRequest = labelWidth;
-                            SideLabelBackground.WidthRequest = labelBackWidth;
-                            pos_x = -SideLabelBackground.Width * scale;
+                            double newSize = DependencyService.Get<CalculateTextWidth>().CalculateWidth(sideLabelText);
+                            SideLabel.WidthRequest = newSize;
+                            //double scale = 1.6;
+                            //labelWidth = labelWidth < 1.0 ? SideLabel.Width * scale : labelWidth;
+                            //labelBackWidth = labelBackWidth < 1.0 ? SideLabelBackground.Width * scale : labelBackWidth;
+                            //SideLabel.WidthRequest = labelWidth;
+                            //SideLabelBackground.WidthRequest = labelBackWidth;
+                            pos_x = -SideLabel.Width-(16*2);
                         },
 
                         // WP
@@ -145,6 +147,7 @@ namespace NControl.Controls
 			};
 
 
+            var marginSize = Device.OnPlatform(8, 2, 8);
             SideLabel = new Label
             {
                 HorizontalTextAlignment = TextAlignment.Center,
@@ -153,7 +156,7 @@ namespace NControl.Controls
                 TextColor = Color.Black,
                 Text = sideLabelText,
                 FontSize = 10,
-                Margin = new Thickness { Top=2, Bottom=2, Left=4, Right=4 },
+                Margin = new Thickness { Top=2, Bottom=2, Left=marginSize, Right=marginSize },
             };
 
             SideLabelBackground = new RoundCornerView
