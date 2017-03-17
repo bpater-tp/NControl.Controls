@@ -93,7 +93,7 @@ namespace NControl.Controls
 					// Draw shadow
 					rect.Inflate(new NGraphics.Size(-4));
 					rect.Y += 4;
-                    double pos_x = -SideLabelBackground.Width;
+                    double pos_x = labelWidth > rect.Width+8 ? -SideLabelBackground.Width : -rect.Width-8;
 
 					Device.OnPlatform(
 
@@ -112,7 +112,8 @@ namespace NControl.Controls
                             new NGraphics.Size(rect.Width, rect.Height),
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
                             SideLabel.WidthRequest = labelWidth;
-                            pos_x = -labelWidth-marginSize-marginSize;
+                            var rectScaled = rect.Width / AndroidScale;
+                            pos_x = labelWidth > rectScaled ? -labelWidth - marginSize - marginSize : -rectScaled-(8/AndroidScale);
                         },
 
                         // WP
