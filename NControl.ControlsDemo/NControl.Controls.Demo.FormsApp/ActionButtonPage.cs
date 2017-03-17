@@ -52,8 +52,8 @@ namespace NControl.Controls.Demo.FormsApp
             double iconFontSize = display.HeightRequestInInches(0.125);
             double sideFontSize = display.HeightRequestInInches(0.08);
 
-            //var playButton = new ActionButton("z galerii"){
-            var playButton = new ActionButton("from gallery"){ 
+            var playButton = new ActionButton("z galerii"){
+            //var playButton = new ActionButton("from gallery"){ 
 				ButtonColor = Color.FromHex ("#2196F3"), 
                 ButtonIcon = FontAwesomeLabel.FAUpload,
                 ButtonIconSize = iconFontSize,
@@ -63,8 +63,8 @@ namespace NControl.Controls.Demo.FormsApp
                 SideLabelFontSize = sideFontSize,
                 Command = _command,
 			};
-            //var bubButton = new ActionButton("z aparatu")
-            var bubButton = new ActionButton("from camera")
+            var bubButton = new ActionButton("z aparatu")
+            //var bubButton = new ActionButton("from camera")
             {
                 ButtonColor = Color.FromHex("#009688"),
                 ButtonIcon = FontAwesomeLabel.FATag,
@@ -85,7 +85,14 @@ namespace NControl.Controls.Demo.FormsApp
                     bubButton,
 				}
 			};
-			layout.Children.Add(abex, () => new Rectangle(((layout.Width/4)*3)-(56/2), (layout.Height/2)-(200), 56, 250));
+            double buttonSize = Device.OnPlatform(0.45, 0.4, 0.4);
+            double diameter = display.WidthRequestInInches(buttonSize);
+            double padding_x = display.WidthRequestInInches(0.08);
+            double padding_y = display.HeightRequestInInches(0.1);
+            var multiplier = 1 + abex.Buttons.Count;
+            layout.Children.Add(abex, () => new Rectangle(this.Width - diameter - padding_x, this.Height - (diameter * multiplier) - padding_y, diameter, diameter * multiplier));
+
+			//layout.Children.Add(abex, () => new Rectangle(((layout.Width/4)*3)-(56/2), (layout.Height/2)-(200), 56, 250));
 		}
 
 		/// <summary>
