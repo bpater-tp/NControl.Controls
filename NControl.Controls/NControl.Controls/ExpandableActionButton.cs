@@ -336,6 +336,31 @@ namespace NControl.Controls
                 AndroidScale = value;
             }
         }
+        /// <summary>
+        /// The button icon property.
+        /// </summary>
+        public static BindableProperty HasShadowProperty =
+            BindableProperty.Create(nameof(HasShadow), typeof(bool), typeof(ExpandableActionButton), true,
+                BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
+                {
+                    var ctrl = (ExpandableActionButton)bindable;
+                    ctrl.HasShadow = (bool)newValue;
+                });
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance has shadow.
+        /// </summary>
+        /// <value><c>true</c> if this instance has shadow; otherwise, <c>false</c>.</value>
+        public bool HasShadow
+        {
+            get { return _mainButton.HasShadow; }
+            set
+            {
+                _mainButton.HasShadow = value;
+            }
+        }
+
+
 #endregion
 	}
 }
