@@ -33,14 +33,19 @@ namespace NControl.Controls
 	/// <summary>
 	/// Entry without borders
 	/// </summary>
-	public class ExtendedEntry: Entry
+	public class ExtendedEntry : Entry
 	{
+		public Keyboard Keyboard
+		{
+			get => (Keyboard)GetValue(KeyboardProperty);
+			set => SetValue(KeyboardProperty, value);
+		}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NControl.Controls.ExtendedEntry"/> class.
 		/// </summary>
-		public ExtendedEntry ()
-		{			
-		}			
+		public ExtendedEntry()
+		{
+		}
 	}
 }
 
