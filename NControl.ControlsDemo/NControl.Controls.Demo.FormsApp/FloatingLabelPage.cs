@@ -20,7 +20,7 @@ namespace NControl.Controls.Demo.FormsApp
 			entry1.Focus();
 
             var entry2 = new FloatingLabelControl { Placeholder = "First name", Keyboard = Keyboard.Text };
-            var entry3 = new FloatingLabelControl { Placeholder = "Last name", Keyboard = Keyboard.Text };
+			var entry3 = new FloatingLabelControl { Placeholder = "Last name", Keyboard = Keyboard.Plain };
 			var entry4 = new FloatingLabelControl{ 
 				Placeholder = "Price", 
 				Keyboard = Keyboard.Numeric, 
