@@ -10,6 +10,7 @@ namespace NControl.Controls.iOS
 {
 	public class ExtendedEntryRenderer: EntryRenderer
 	{
+        private new ExtendedEntry Element => (ExtendedEntry)base.Element;
 		/// <summary>
 		/// Raises the element changed event.
 		/// </summary>
@@ -23,6 +24,12 @@ namespace NControl.Controls.iOS
 				var textfield = Control as UITextField;
 				textfield.BorderStyle = UITextBorderStyle.None;
                 UpdateFont(e.NewElement as ExtendedEntry);
+                if (Element.Keyboard.Equals(Keyboard.Plain))
+                {
+                    Control.SpellCheckingType = UITextSpellCheckingType.No;
+                    Control.AutocorrectionType = UITextAutocorrectionType.No;
+                    Control.AutocapitalizationType = UITextAutocapitalizationType.None;
+                }
 			}
 
 			if (e.NewElement != null)

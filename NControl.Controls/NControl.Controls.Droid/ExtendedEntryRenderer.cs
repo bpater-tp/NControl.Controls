@@ -23,7 +23,7 @@ namespace NControl.Controls.Droid
 				Control.SetPadding(10, 0, 0, 0);
 				if (Element.Keyboard.Equals(Keyboard.Plain))
 				{
-					Control.SetRawInputType(InputTypes.ClassText | InputTypes.TextVariationVisiblePassword);
+                    Control.InputType = InputTypes.ClassText | InputTypes.TextVariationVisiblePassword;
 				}
 	            UpdateGravity();
 			}
@@ -37,8 +37,12 @@ namespace NControl.Controls.Droid
 				UpdateFont ();
 			else if (e.PropertyName == InputView.KeyboardProperty.PropertyName && Element.Keyboard.Equals(Keyboard.Plain))
 			{
-				Control.SetRawInputType(InputTypes.ClassText | InputTypes.TextVariationVisiblePassword);
+				Control.InputType = InputTypes.ClassText | InputTypes.TextVariationVisiblePassword;
 			}
+            else if (e.PropertyName == Entry.IsPasswordProperty.PropertyName && Element.Keyboard.Equals(Keyboard.Plain))
+            {
+                Control.InputType = InputTypes.ClassText | InputTypes.TextVariationVisiblePassword;
+            }
 		}
 
 		/// <summary>
