@@ -21,9 +21,9 @@ namespace NControl.Controls.Droid
 			{
 				Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
 				Control.SetPadding(10, 0, 0, 0);
-				if (Element.Keyboard.Equals(Keyboard.Plain))
+                if (Element.Keyboard.Equals(Keyboard.Plain) && !Element.IsPassword)
 				{
-                    Control.InputType = InputTypes.ClassText | InputTypes.TextVariationVisiblePassword;
+                    Control.InputType =  InputTypes.TextVariationVisiblePassword;
 				}
 	            UpdateGravity();
 			}
@@ -35,11 +35,11 @@ namespace NControl.Controls.Droid
 				UpdateGravity ();
 			else if (e.PropertyName == Entry.FontFamilyProperty.PropertyName)
 				UpdateFont ();
-			else if (e.PropertyName == InputView.KeyboardProperty.PropertyName && Element.Keyboard.Equals(Keyboard.Plain))
-			{
-				Control.InputType = InputTypes.ClassText | InputTypes.TextVariationVisiblePassword;
-			}
-            else if (e.PropertyName == Entry.IsPasswordProperty.PropertyName && Element.Keyboard.Equals(Keyboard.Plain))
+			//else if (e.PropertyName == InputView.KeyboardProperty.PropertyName && Element.Keyboard.Equals(Keyboard.Plain))
+			//{
+			//	Control.InputType = InputTypes.ClassText | InputTypes.TextVariationVisiblePassword;
+			//}
+            else if (e.PropertyName == Entry.IsPasswordProperty.PropertyName && Element.Keyboard.Equals(Keyboard.Plain) && !((Entry)sender).IsPassword)
             {
                 Control.InputType = InputTypes.ClassText | InputTypes.TextVariationVisiblePassword;
             }
