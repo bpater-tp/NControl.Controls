@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
    <metadata minClientVersion="2.8.1">
        <id>NControl.Controls</id>
-    <version>0.9.6.5</version>
+    <version>0.9.6.7</version>
     <authors>Christian Falch</authors>
     <owners>Christian Falch</owners>
     <licenseUrl>https://github.com/chrfalch/NControl.Controls/blob/master/LICENSE.md</licenseUrl>
@@ -13,7 +13,7 @@
     	NControl library to enable the creation of advanced custom controls in a true 
     	cross-platform way.
     </description>
-    <releaseNotes>Released for iOS, Android and Windows Phone Silverlight 8.1.</releaseNotes>
+    <releaseNotes>Released for iOS, Android.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>xamarin, pcl, xam.pcl, android, xamarin.forms, ios</tags>
        <dependencies>
