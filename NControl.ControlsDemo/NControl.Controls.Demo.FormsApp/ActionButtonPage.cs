@@ -83,7 +83,10 @@ namespace NControl.Controls.Demo.FormsApp
 				Buttons = {
 					playButton,
                     bubButton,
-				}
+				},
+                Command = new Command( () => {
+                    Debug.WriteLine("blalalb");
+                })
 			};
             double buttonSize = Device.OnPlatform(0.45, 0.4, 0.4);
             double diameter = display.WidthRequestInInches(buttonSize);

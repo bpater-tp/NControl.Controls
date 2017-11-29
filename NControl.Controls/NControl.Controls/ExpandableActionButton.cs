@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NControl.Controls
 {
@@ -169,7 +170,7 @@ namespace NControl.Controls
 		/// <summary>
 		/// Shows the buttons.
 		/// </summary>
-		private async Task ShowButtonsAsync ()
+        private async Task ShowButtonsAsync ()
 		{
 			AddButtons ();
 
@@ -177,6 +178,10 @@ namespace NControl.Controls
 		        return;
 
 			var tasks = new List<Task>();
+            if (Command != null)
+            {
+                Command.Execute(CommandParameter);
+            }
 
 			var c = 1;
 
@@ -360,6 +365,46 @@ namespace NControl.Controls
             }
         }
 
+        /// <summary>
+        /// The command property.
+        /// </summary>
+        public static BindableProperty CommandProperty = 
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(ExpandableActionButton), null,
+                                    BindingMode.TwoWay, null, (bindable, oldValue, newValue) => {
+            var ctrl = (ExpandableActionButton)bindable;
+            ctrl.Command = (ICommand)newValue;
+        });
+
+        /// <summary>
+        /// Gets or sets the color of the buton.
+        /// </summary>
+        /// <value>The color of the buton.</value>
+        public ICommand Command
+        {
+            get {  return (ICommand)GetValue (CommandProperty);}
+            set {
+
+                if (Command != null)
+                    Command.CanExecuteChanged -= HandleCanExecuteChanged;
+
+                SetValue (CommandProperty, value);
+
+                if (Command != null)
+                    Command.CanExecuteChanged += HandleCanExecuteChanged;
+
+            }
+        }
+
+        private object CommandParameter = new object();
+        /// <summary>
+        /// Handles the can execute changed.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="args">Arguments.</param>
+        private void HandleCanExecuteChanged(object sender, EventArgs args)
+        {
+            IsEnabled = Command.CanExecute (CommandParameter);
+        }
 
 #endregion
 	}
