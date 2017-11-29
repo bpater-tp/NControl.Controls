@@ -40,7 +40,7 @@ namespace NControl.Controls
 		/// <summary>
 		/// The main button.
 		/// </summary>
-		private ToggleActionButton _mainButton;
+        public ToggleActionButton MainButton;
 
 		/// <summary>
 		/// The layout.
@@ -67,7 +67,7 @@ namespace NControl.Controls
 			Content = new RelativeLayout();
 
 			// Main button
-			_mainButton = new ToggleActionButton {
+			MainButton = new ToggleActionButton {
 				ButtonIcon = FontAwesomeLabel.FAEllipsisV,
 			};
 				
@@ -75,13 +75,13 @@ namespace NControl.Controls
 			_buttonsLayout = new RelativeLayout ();
 			(Content as RelativeLayout).Children.Add (_buttonsLayout, () => (Content as RelativeLayout).Bounds);
 
-			AddButtonToLayout (_mainButton, Content as RelativeLayout);
+			AddButtonToLayout (MainButton, Content as RelativeLayout);
 
-			_mainButton.PropertyChanged += async (object sender, System.ComponentModel.PropertyChangedEventArgs e) => {
+			MainButton.PropertyChanged += async (object sender, System.ComponentModel.PropertyChangedEventArgs e) => {
 				if(e.PropertyName == ToggleActionButton.IsToggledProperty.PropertyName)
 				{
 					// Show/Hide buttons
-					if(_mainButton.IsToggled)
+					if(MainButton.IsToggled)
 						await ShowButtonsAsync();
 					else
 						await HideButtonsAsync();
@@ -155,7 +155,7 @@ namespace NControl.Controls
 		        return;
 
 		    _isShowingSubmenu = false;
-            _mainButton.IsToggled = false;
+            MainButton.IsToggled = false;
 
 			var tasks = new List<Task>();
 			foreach (var button in Buttons) {
@@ -195,7 +195,7 @@ namespace NControl.Controls
 				
 				//button.HasShadow = true;
 				tasks.Add (button.FadeTo (1.0, 50));
-				tasks.Add(button.TranslateTo (0.0, -(ButtonPadding+_mainButton.Height) * c++, easing: Easing.SpringIn));
+				tasks.Add(button.TranslateTo (0.0, -(ButtonPadding+MainButton.Height) * c++, easing: Easing.SpringIn));
 			}			
 
 			await Task.WhenAll(tasks);
@@ -255,7 +255,7 @@ namespace NControl.Controls
 			get {  return (Color)GetValue (ButtonColorProperty);}
 			set {
 				SetValue (ButtonColorProperty, value);
-				_mainButton.ButtonColor = value;
+				MainButton.ButtonColor = value;
 			}
 		}
 
@@ -276,7 +276,7 @@ namespace NControl.Controls
                 BindingMode.TwoWay, null, (bindable, oldValue, newValue) =>
                 {
                     var ctrl = (ExpandableActionButton)bindable;
-                    ctrl._mainButton.ButtonIcon = (string)newValue;
+                    ctrl.MainButton.ButtonIcon = (string)newValue;
                 });
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace NControl.Controls
             set
             {
                 SetValue(ButtonIconProperty, value);
-                _mainButton.ButtonIcon = value;
+                MainButton.ButtonIcon = value;
             }
         }
 
@@ -314,7 +314,7 @@ namespace NControl.Controls
             set
             {
                 SetValue(ButtonIconSizeProperty, value);
-                _mainButton.ButtonIconSize = value;
+                MainButton.ButtonIconSize = value;
             }
         }
 
@@ -358,10 +358,10 @@ namespace NControl.Controls
         /// <value><c>true</c> if this instance has shadow; otherwise, <c>false</c>.</value>
         public bool HasShadow
         {
-            get { return _mainButton.HasShadow; }
+            get { return MainButton.HasShadow; }
             set
             {
-                _mainButton.HasShadow = value;
+                MainButton.HasShadow = value;
             }
         }
 
