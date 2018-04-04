@@ -88,38 +88,37 @@ namespace NControl.Controls
 		{
 			var layout = new Grid{Padding = 0, ColumnSpacing = 0, RowSpacing = 0};
 
-			ButtonShadowElement = new NControlView{ 
-				DrawingFunction = (canvas, rect) => {
+			ButtonShadowElement = new NControlView
+            { 
+				DrawingFunction = (canvas, rect) => 
+                {
 					// Draw shadow
 					rect.Inflate(new NGraphics.Size(-4));
 					rect.Y += 4;
-                    double pos_x = labelWidth > rect.Width+8 ? -SideLabelBackground.Width : -rect.Width-8;
+                    double pos_x = SideLabel.Width > rect.Width + 8 ? -SideLabelBackground.Width : -rect.Width - 8;
 
-					Device.OnPlatform(
-
-                        //iOS
-                        () =>
-                        {
+                    switch (Device.RuntimePlatform)
+                    {
+                        case Device.iOS:
                             canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                        },
 
-                        // Android
-                        () =>
-                        {
+                            break;
+                        case Device.Android:
                             canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
                             new NGraphics.Point(rect.Width / 2, (rect.Height / 2) + 2),
                             new NGraphics.Size(rect.Width, rect.Height),
                             new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
-                            SideLabel.WidthRequest = labelWidth;
                             var rectScaled = rect.Width / AndroidScale;
-                            pos_x = labelWidth > rectScaled ? -labelWidth - marginSize - marginSize : -rectScaled-(8/AndroidScale);
-                        },
+                            pos_x = SideLabel.Width > rectScaled ? -SideLabel.Width - marginSize - marginSize : -rectScaled - (8 / AndroidScale);
 
-                        // WP
-                        () => canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
-                            new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear)), null);
+                            break;
+                        default:
+                            canvas.DrawEllipse(rect, null, new NGraphics.RadialGradientBrush(
+                                new NGraphics.Color(0, 0, 0, 200), NGraphics.Colors.Clear));
 
+                            break;
+                    }
                     SideLabelGrid.TranslationX = pos_x;
 				},
 			};
