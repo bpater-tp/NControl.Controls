@@ -95,7 +95,7 @@ namespace NControl.Controls
 					// Draw shadow
 					rect.Inflate(new NGraphics.Size(-4));
 					rect.Y += 4;
-                    double pos_x = SideLabel.Width > rect.Width + 8 ? -SideLabelBackground.Width : -rect.Width - 8;
+                    double pos_x = SideLabel.Width > rect.Width  ? -SideLabelBackground.Width : -rect.Width - 8;
 
                     switch (Device.RuntimePlatform)
                     {
@@ -141,6 +141,7 @@ namespace NControl.Controls
 			};
 
 
+            labelWidth = DependencyService.Get<CalculateTextWidth>().CalculateWidth(sideLabelText);
             SideLabel = new Label
             {
                 HorizontalTextAlignment = TextAlignment.Center,
@@ -150,8 +151,8 @@ namespace NControl.Controls
                 Text = sideLabelText,
                 FontSize = 10,
                 Margin = new Thickness { Top=2, Bottom=2, Left=marginSize, Right=marginSize },
+                MinimumWidthRequest = labelWidth,
             };
-            labelWidth = DependencyService.Get<CalculateTextWidth>().CalculateWidth(sideLabelText);
 
             SideLabelBackground = new RoundCornerView
             {
