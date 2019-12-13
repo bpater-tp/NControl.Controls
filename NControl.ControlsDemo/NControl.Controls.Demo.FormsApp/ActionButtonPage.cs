@@ -52,7 +52,7 @@ namespace NControl.Controls.Demo.FormsApp
             double iconFontSize = display.HeightRequestInInches(0.125);
             double sideFontSize = display.HeightRequestInInches(0.08);
 
-            var playButton = new ActionButton("z galerii"){
+            var playButton = new ActionButton("from gallery"){
             //var playButton = new ActionButton("from gallery"){ 
 				ButtonColor = Color.FromHex ("#2196F3"), 
                 ButtonIcon = FontAwesomeLabel.FAUpload,
@@ -63,7 +63,7 @@ namespace NControl.Controls.Demo.FormsApp
                 SideLabelFontSize = sideFontSize,
                 Command = _command,
 			};
-            var bubButton = new ActionButton("z aparatu")
+            var bubButton = new ActionButton("from camera")
             //var bubButton = new ActionButton("from camera")
             {
                 ButtonColor = Color.FromHex("#009688"),
