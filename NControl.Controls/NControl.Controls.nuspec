@@ -17,8 +17,8 @@
     <copyright>Copyright 2015</copyright>
     <tags>xamarin, pcl, xam.pcl, android, xamarin.forms, ios</tags>
        <dependencies>
-         <dependency id="Xamarin.Forms" version="2.4.0.282" />
-         <dependency id="NGraphics" version="0.4.0" />
+         <dependency id="Xamarin.Forms" version="4.4.0.991265" />
+         <dependency id="NGraphics" version="0.5.0" />
          <dependency id="NControl" version="0.9.1" />
        </dependencies>
    </metadata>
