@@ -77,7 +77,7 @@ namespace NControl.Controls
 
         private double labelWidth;
 
-        private double marginSize = Device.OnPlatform(8, 2, 8);
+        private double marginSize = Device.RuntimePlatform == Device.Android ? 2 : 8;
 
 		#endregion
 
@@ -137,7 +137,7 @@ namespace NControl.Controls
 				VerticalTextAlignment = TextAlignment.Center,
 				TextColor = Color.White,
 				Text = FontAwesomeLabel.FAPlus,
-				FontSize = 14,
+				FontSize = 14.0,
 			};
 
 
@@ -145,23 +145,26 @@ namespace NControl.Controls
             SideLabel = new Label
             {
                 HorizontalTextAlignment = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalTextAlignment = TextAlignment.Center,
                 LineBreakMode = LineBreakMode.NoWrap,
                 TextColor = Color.Black,
                 Text = sideLabelText,
-                FontSize = 10,
+                FontSize = 10.0,
                 Margin = new Thickness { Top=2, Bottom=2, Left=marginSize, Right=marginSize },
-                MinimumWidthRequest = labelWidth,
+                WidthRequest = labelWidth,
             };
 
             SideLabelBackground = new RoundCornerView
             {
                 BackgroundColor = Color.Transparent,
-                CornerRadius = Device.OnPlatform(3, 6, 3),
+                CornerRadius = Device.RuntimePlatform == Device.Android ? 6 : 3,
                 BorderColor = Color.Transparent,
                 BorderWidth = 2,
+                WidthRequest = labelWidth,
             };
 
+            labelWidth += Device.RuntimePlatform == Device.Android ? 8 : 0;
             SideLabelGrid = new Grid
             {
                 VerticalOptions = LayoutOptions.CenterAndExpand,
@@ -172,7 +175,7 @@ namespace NControl.Controls
                     new RowDefinition { Height = GridLength.Auto },
                 },
                 ColumnDefinitions = {
-                    new ColumnDefinition { Width = GridLength.Auto },
+                    new ColumnDefinition { Width = labelWidth },
                 },
             };
             SideLabelGrid.Children.Add(SideLabelBackground, 0, 1);
